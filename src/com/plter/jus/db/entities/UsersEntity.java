@@ -60,7 +60,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "nicename", nullable = false, insertable = true, updatable = true, length = 50)
+    @Column(name = "nicename", nullable = true, insertable = true, updatable = true, length = 50)
     public String getNicename() {
         return nicename;
     }
@@ -70,7 +70,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "url", nullable = false, insertable = true, updatable = true, length = 100)
+    @Column(name = "url", nullable = true, insertable = true, updatable = true, length = 100)
     public String getUrl() {
         return url;
     }

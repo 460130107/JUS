@@ -4,16 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>用户管理-JUS</title>
-    ${jQueryHtml}${jQueryUIHtml}${mainStyleHtml}
+    <%@include file="tpls/jQuery.jsp"%>
+    <%@include file="tpls/jQueryUI.jsp"%>
+    <%@include file="tpls/MainStyle.jsp"%>
 </head>
 <body>
 <h1>用户管理</h1>
-${mainMenuHtml}
-
+<%@include file="tpls/NavMenu.jsp"%>
 <div class="ui-widget main-content">
     <div class="ui-widget-content" style="padding: 10px">
-        <div>共${usersCount}个用户，每页呈现${perPageCount}条数据，共${maxPageCount}页，当前第${currentPageIndex+1}页</div>
-        <table border="1">
+        <div style="padding-bottom: 10px">
+            共${usersCount}个用户，每页呈现${perPageCount}条数据，共${maxPageCount}页，当前第${currentPageIndex+1}页。
+            <a href="#" class="button" id="btn-add-user">添加用户</a>
+        </div>
+        <table border="1" width="100%">
             <tr><th>ID</th><th>用户名</th><th>邮箱</th></tr>
             <c:forEach items="${userList}" var="user">
                 <tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td></tr>
@@ -33,6 +37,20 @@ ${mainMenuHtml}
     </div>
 </div>
 
-${mainJs}
+<div id="dialog-add-user" style="display: none">
+    <form action="${contextPath}au" method="post">
+        <span>用户：</span><input type="text" required="required" name="name"><br>
+        <span>密码：</span><input type="password" required="required" name="pass"><br>
+        <span>邮箱：</span><input type="email" required="required" name="email"><br>
+        <input type="submit" value="提交" class="button">
+    </form>
+</div>
+
+<script>
+    $("#btn-add-user").click(function () {
+        $("#dialog-add-user").dialog({modal:true,width:350});
+    });
+</script>
+<%@include file="tpls/MainScript.jsp"%>
 </body>
 </html>
