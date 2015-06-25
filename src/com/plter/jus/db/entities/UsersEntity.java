@@ -142,4 +142,16 @@ public class UsersEntity {
         result = 31 * result + (lastlogtime != null ? lastlogtime.hashCode() : 0);
         return result;
     }
+
+    private String phone;
+
+    @Basic
+    @Column(name = "phone", nullable = true, insertable = true, updatable = true, length = 20)
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

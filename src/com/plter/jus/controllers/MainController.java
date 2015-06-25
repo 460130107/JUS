@@ -1,7 +1,7 @@
 package com.plter.jus.controllers;
 
-import com.plter.jus.db.entities.DbConnection;
-import org.hibernate.Session;
+import com.plter.jus.auth.Functions;
+import com.plter.jus.auth.funcs.main.ShowMainPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainController {
 
-
     @RequestMapping(value = "/",method = RequestMethod.GET)
-    public String mainPage(ModelMap map,HttpServletRequest request,HttpServletResponse response){
+    public String mainPage(ModelMap map, HttpServletRequest req, HttpServletResponse resp){
+        Functions.call(ShowMainPage.class,req,resp);
         return "main";
     }
 }

@@ -62,5 +62,15 @@ public class GroupsEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }    private long parent;
+
+    @Basic
+    @Column(name = "parent", nullable = false, insertable = true, updatable = true)
+    public long getParent() {
+        return parent;
+    }
+
+    public void setParent(long parent) {
+        this.parent = parent;
     }
 }

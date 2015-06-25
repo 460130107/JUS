@@ -15,6 +15,7 @@
         <mapping class="com.plter.jus.db.entities.GroupsEntity"/>
         <mapping class="com.plter.jus.db.entities.GroupshipEntity"/>
         <mapping class="com.plter.jus.db.entities.UsersEntity"/>
+        <mapping class="com.plter.jus.db.entities.FuncshipEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

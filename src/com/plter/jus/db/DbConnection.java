@@ -1,4 +1,4 @@
-package com.plter.jus.db.entities;
+package com.plter.jus.db;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

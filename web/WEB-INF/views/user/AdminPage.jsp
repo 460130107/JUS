@@ -1,16 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page pageEncoding="UTF-8" %>
+<%@page pageEncoding="UTF-8" session="false" %>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>用户管理-JUS</title>
-    <%@include file="tpls/jQuery.jsp"%>
-    <%@include file="tpls/jQueryUI.jsp"%>
-    <%@include file="tpls/MainStyle.jsp"%>
+    <%@include file="../tpls/jQuery.jsp"%>
+    <%@include file="../tpls/jQueryUI.jsp"%>
+    <%@include file="../tpls/MainStyle.jsp"%>
 </head>
 <body>
 <h1>用户管理</h1>
-<%@include file="tpls/NavMenu.jsp"%>
+<%@include file="../tpls/NavMenu.jsp"%>
 <div class="ui-widget main-content">
     <div class="ui-widget-content" style="padding: 10px">
         <div style="padding-bottom: 10px">
@@ -37,20 +37,20 @@
     </div>
 </div>
 
-<div id="dialog-add-user" style="display: none">
-    <form action="${contextPath}au" method="post">
-        <span>用户：</span><input type="text" required="required" name="name"><br>
-        <span>密码：</span><input type="password" required="required" name="pass"><br>
-        <span>邮箱：</span><input type="email" required="required" name="email"><br>
+<div id="dialog-add-user" style="display: none;text-align: center">
+    <form action="${pageContext.request.contextPath}/u/add" method="post">
+        <p><span>用户：</span><input type="text" required="required" name="name"></p>
+        <p><span>密码：</span><input type="password" required="required" name="pass"></p>
+        <p><span>邮箱：</span><input type="email" required="required" name="email"></p>
         <input type="submit" value="提交" class="button">
     </form>
 </div>
 
 <script>
     $("#btn-add-user").click(function () {
-        $("#dialog-add-user").dialog({modal:true,width:350});
+        $("#dialog-add-user").dialog({modal:true,width:350,title:"添加用户"});
     });
 </script>
-<%@include file="tpls/MainScript.jsp"%>
+<%@include file="../tpls/MainScript.jsp"%>
 </body>
 </html>

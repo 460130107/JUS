@@ -1,16 +1,15 @@
 package com.plter.jus.controllers;
 
-import com.plter.jus.db.Users;
-import com.plter.jus.db.entities.DbConnection;
-import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.tools.MD5;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import com.plter.jus.auth.Functions;
+import com.plter.jus.auth.funcs.user.ShowAdminPage;
+import com.plter.jus.auth.funcs.user.AddUser;
+import com.plter.jus.auth.funcs.user.Login;
+import com.plter.jus.auth.funcs.user.Reg;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,39 +21,40 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class UserController {
 
-    @RequestMapping(value = "ua"/*User Admin Page*/,method = RequestMethod.GET)
-    public String userAdmin(ModelMap map,@RequestParam(value = "pi",required = false,defaultValue = "0") int pageIndex,HttpServletRequest request,HttpServletResponse response){
-        Session session = DbConnection.getSession();
-        Users.retrieveUsers(session,map,pageIndex);
-        session.close();
-        return "UserAdmin";
+    @RequestMapping(value = "/u/ap"/*Admin Page*/,method = RequestMethod.GET)
+    public String userAdmin(HttpServletRequest request, HttpServletResponse response){
+        Functions.call(ShowAdminPage.class,request,response);
+        return "user/AdminPage";
     }
 
-    @RequestMapping(value = "au"/*Add User Action*/,method = RequestMethod.POST)
-    public String addUser(ModelMap map,
-                          @RequestParam(value = "name",required = false)String name,
-                          @RequestParam(value = "pass",required = false)String pass,
-                          @RequestParam(value = "email",required = false)String email){
-        try {
-            pass = MD5.md5(pass);
-            Session session = DbConnection.getSession();
-            Transaction transaction = session.beginTransaction();
+    @RequestMapping(value = "/u/add"/*Add User Action*/,method = RequestMethod.POST)
+    public String addUser(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(AddUser.class, request, response);
+        return "user/AddUser";
+    }
 
-            UsersEntity entity = new UsersEntity();
-            entity.setName(name);
-            entity.setEmail(email);
-            entity.setPass(pass);
-            session.save(entity);
+    @RequestMapping(value = "/u/lp"/*Login page*/,method = RequestMethod.GET)
+    public String loginPage(ModelMap map){
+        return "user/LoginPage";
+    }
 
-            transaction.commit();
-            session.close();
+    @RequestMapping(value = "/u/lp",method = RequestMethod.POST)
+    public @ResponseBody String postLogin(HttpServletRequest request,HttpServletResponse response){
+        request.setAttribute("errorMsg","Nothing");
 
-            map.addAttribute("success",true);
-        }catch (Exception e){
-            e.printStackTrace();
-            map.addAttribute("success",false);
-        }
+        Functions.call(Login.class,request,response);
 
-        return "AddUser";
+        String errorMsg = (String) request.getAttribute("errorMsg");
+        return errorMsg;
+    }
+
+    @RequestMapping(value = "/u/reg",method = RequestMethod.POST)
+    public @ResponseBody String reg(HttpServletRequest request,HttpServletResponse response){
+        request.setAttribute("errorMsg","Nothing");
+
+        Functions.call(Reg.class,request,response);
+
+        String errorMsg = (String) request.getAttribute("errorMsg");
+        return errorMsg;
     }
 }
