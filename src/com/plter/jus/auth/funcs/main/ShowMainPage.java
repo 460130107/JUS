@@ -2,6 +2,7 @@ package com.plter.jus.auth.funcs.main;
 
 import com.plter.jus.auth.Function;
 import com.plter.jus.auth.annotation.RequireLogin;
+import com.plter.jus.auth.tools.RenderTool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,11 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShowMainPage extends Function{
 
-    public ShowMainPage() {
-    }
-
     @Override
     @RequireLogin
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+        RenderTool.setRenderPage(request,"main");
     }
 }

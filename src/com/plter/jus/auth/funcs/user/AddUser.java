@@ -1,11 +1,12 @@
 package com.plter.jus.auth.funcs.user;
 
 import com.plter.jus.auth.Function;
+import com.plter.jus.auth.annotation.RequireSuperAdmin;
 import com.plter.jus.auth.annotation.RequireLogin;
 import com.plter.jus.auth.tools.PasswordTool;
+import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -20,6 +21,7 @@ public class AddUser extends Function{
 
     @Override
     @RequireLogin
+    @RequireSuperAdmin
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Session session = DbConnection.getSession();
 
@@ -63,5 +65,7 @@ public class AddUser extends Function{
         }
 
         session.close();
+
+        RenderTool.setRenderPage(request,"user/AddUser");
     }
 }

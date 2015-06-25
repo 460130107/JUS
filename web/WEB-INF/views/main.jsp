@@ -15,12 +15,6 @@
 <div class="ui-widget main-content">
     <div class="ui-widget-content" style="padding: 10px">
         欢迎使用JUS！<br>
-        JUS是个用户管理系统<br>
-        JUS是个用户管理系统<br>
-        JUS是个用户管理系统<br>
-        JUS是个用户管理系统<br>
-        JUS是个用户管理系统<br>
-        JUS是个用户管理系统<br>
     </div>
 </div>
 <%@include file="tpls/MainScript.jsp"%>

@@ -3,6 +3,7 @@ package com.plter.jus.auth.funcs.user;
 import com.plter.jus.auth.Function;
 import com.plter.jus.auth.annotation.RequireLogin;
 import com.plter.jus.auth.tools.AttrTool;
+import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
 import org.hibernate.Session;
@@ -38,6 +39,7 @@ public class ShowAdminPage extends Function{
                 .list();
 
         long usersCount = (long) session.createCriteria(UsersEntity.class).setProjection(Projections.rowCount()).uniqueResult();
+        session.close();
 
         request.setAttribute(KEY_CURRENT_PAGE_INDEX, pageIndex);
         request.setAttribute(KEY_USER_LIST, list);
@@ -45,6 +47,6 @@ public class ShowAdminPage extends Function{
         request.setAttribute(KEY_MAX_PAGE_COUNT, usersCount / PER_PAGE_COUNT + 1);
         request.setAttribute(KEY_PER_PAGE_COUNT, PER_PAGE_COUNT);
 
-        session.close();
+        RenderTool.setRenderPage(request,"user/AdminPage");
     }
 }

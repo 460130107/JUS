@@ -2,6 +2,7 @@ package com.plter.jus.controllers;
 
 import com.plter.jus.auth.Functions;
 import com.plter.jus.auth.funcs.main.ShowMainPage;
+import com.plter.jus.auth.tools.RenderTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class MainController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
-    public String mainPage(ModelMap map, HttpServletRequest req, HttpServletResponse resp){
+    public String mainPage(HttpServletRequest req, HttpServletResponse resp){
         Functions.call(ShowMainPage.class,req,resp);
-        return "main";
+        return RenderTool.getRenderPage(req);
     }
 }

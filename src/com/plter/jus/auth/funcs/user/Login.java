@@ -1,15 +1,16 @@
 package com.plter.jus.auth.funcs.user;
 
 import com.plter.jus.auth.Function;
+import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
+import com.plter.jus.msg.ResponseErrorMessages;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,12 +27,12 @@ public class Login extends Function {
 
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute("errorMsg","No name input");
+                request.setAttribute("errorMsg", ResponseErrorMessages.NO_NAME_FOUND);
                 break;
             }
             String pass = request.getParameter("pass");
             if (pass==null){
-                request.setAttribute("errorMsg","No password input");
+                request.setAttribute("errorMsg",ResponseErrorMessages.NO_PASS_FOUND);
                 break;
             }
 
@@ -71,7 +72,7 @@ public class Login extends Function {
         static private final String KEY_LOGGED_NAME = "loggedName";
 
         static public boolean isLogged(HttpServletRequest request){
-            return getValueFromSession(request.getSession(),KEY_LOGGED,false);
+            return AttrTool.getSessionValue(request.getSession(), KEY_LOGGED, false);
         }
 
         static public void setLogged(HttpServletRequest request,boolean logState){
@@ -83,7 +84,7 @@ public class Login extends Function {
         }
 
         static public long getLoggedId(HttpServletRequest request){
-            return getValueFromSession(request.getSession(),KEY_LOGGED_ID,0L);
+            return AttrTool.getSessionValue(request.getSession(), KEY_LOGGED_ID, 0L);
         }
 
         static public void setLoggedName(HttpServletRequest request,String name){
@@ -91,13 +92,7 @@ public class Login extends Function {
         }
 
         static public String getLoggedName(HttpServletRequest request){
-            return getValueFromSession(request.getSession(),KEY_LOGGED_NAME,"");
-        }
-
-
-        static public<T> T getValueFromSession(HttpSession session,String key,T defaultValue){
-            Object obj = session.getAttribute(key);
-            return obj!=null?(T)obj:defaultValue;
+            return AttrTool.getSessionValue(request.getSession(), KEY_LOGGED_NAME, "");
         }
     }
 }
