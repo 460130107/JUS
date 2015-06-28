@@ -16,10 +16,10 @@
     <div class="ui-widget-content" style="padding: 10px">
         <div>共${groups.size()}条数据。<a href="#" class="button" id="btn-add-group">添加组</a></div>
         <table width="100%" border="1" style="margin-top: 10px">
-            <tr><th>ID</th><th>名称</th><th>描述</th><th>父级组</th></tr>
+            <tr><th>ID</th><th>名称</th><th>描述</th><th width="120">操作</th></tr>
             <c:forEach items="${groups}" var="group">
                 <tr>
-                    <td>${group.id}</td><td>${group.name}</td><td>${group.description}</td><td>${group.parent}</td>
+                    <td>${group.id}</td><td>${group.name}</td><td>${group.description}</td><td style="text-align: center"><a href="${pageContext.request.contextPath}/g/ep?gid=${group.id}" class="button">编辑权限</a></td>
                 </tr>
             </c:forEach>
         </table>

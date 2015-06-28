@@ -5,7 +5,7 @@ import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.msg.ResponseErrorMessages;
+import com.plter.jus.msg.ErrorMessages;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -27,12 +27,12 @@ public class Login extends Function {
 
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute("errorMsg", ResponseErrorMessages.NO_NAME_FOUND);
+                request.setAttribute("errorMsg", ErrorMessages.NO_NAME_FOUND);
                 break;
             }
             String pass = request.getParameter("pass");
             if (pass==null){
-                request.setAttribute("errorMsg",ResponseErrorMessages.NO_PASS_FOUND);
+                request.setAttribute("errorMsg", ErrorMessages.NO_PASS_FOUND);
                 break;
             }
 

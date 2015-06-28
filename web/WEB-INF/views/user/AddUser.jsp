@@ -6,11 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-<c:if test="${success}">
-    <%response.sendRedirect(request.getContextPath()+"/u/ap");%>
-</c:if>
-<c:if test="${!success}">
-    <c:out value="添加用户失败"/>
-</c:if>
+${errorMsg}
 </body>
 </html>

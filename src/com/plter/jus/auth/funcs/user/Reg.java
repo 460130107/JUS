@@ -4,7 +4,7 @@ import com.plter.jus.auth.Function;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.msg.ResponseErrorMessages;
+import com.plter.jus.msg.ErrorMessages;
 import com.plter.jus.Constants;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,17 +22,17 @@ public class Reg extends Function {
         do {
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG, ResponseErrorMessages.NO_NAME_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_NAME_FOUND);
                 break;
             }
             String pass = request.getParameter("pass");
             if (pass==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ResponseErrorMessages.NO_PASS_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_PASS_FOUND);
                 break;
             }
             String email = request.getParameter("email");
             if (email==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ResponseErrorMessages.NO_EMAIL_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_EMAIL_FOUND);
                 break;
             }
 
@@ -47,7 +47,7 @@ public class Reg extends Function {
                 transaction.commit();
             }catch (Exception e){
                 e.printStackTrace();
-                request.setAttribute(Constants.KEY_ERROR_MSG,ResponseErrorMessages.CAN_NOT_WRITE_TO_DB);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.CAN_NOT_WRITE_TO_DB);
             }
             session.close();
 

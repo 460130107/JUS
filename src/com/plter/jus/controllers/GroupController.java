@@ -1,7 +1,11 @@
 package com.plter.jus.controllers;
 
+import com.plter.jus.auth.Function;
 import com.plter.jus.auth.Functions;
+import com.plter.jus.auth.funcs.group.AddGroup;
+import com.plter.jus.auth.funcs.group.EditPermissions;
 import com.plter.jus.auth.funcs.group.ShowGroupAdminPage;
+import com.plter.jus.auth.funcs.group.UpdatePermissions;
 import com.plter.jus.auth.tools.RenderTool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,8 +30,21 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/g/add"/*Add Group*/,method = RequestMethod.POST)
-    public String addGroup(ModelMap map){
+    public String addGroup(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(AddGroup.class,request,response);
+        return RenderTool.getRenderPage(request);
+    }
 
-        return "group/AddGroup";
+    @RequestMapping(value = "/g/ep"/*Edit Permissions*/,method = RequestMethod.GET)
+    public String editPermissions(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(EditPermissions.class,request,response);
+        return RenderTool.getRenderPage(request);
+    }
+
+
+    @RequestMapping(value = "/g/up"/*Update permissions*/,method = RequestMethod.POST)
+    public String updatePermissions(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(UpdatePermissions.class,request,response);
+        return RenderTool.getRenderPage(request);
     }
 }

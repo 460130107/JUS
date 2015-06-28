@@ -1,12 +1,16 @@
 package com.plter.jus.auth.funcs.user;
 
+import com.plter.jus.Constants;
 import com.plter.jus.auth.Function;
 import com.plter.jus.auth.annotation.RequireSuperAdmin;
 import com.plter.jus.auth.annotation.RequireLogin;
+import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.PasswordTool;
+import com.plter.jus.auth.tools.RedirectTool;
 import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
+import com.plter.jus.msg.ErrorMessages;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,32 +25,30 @@ public class AddUser extends Function{
 
     @Override
     @RequireLogin
-    @RequireSuperAdmin
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Session session = DbConnection.getSession();
 
-        try {
-            do {
-                String pass = request.getParameter("pass");
-                if (pass==null){
-                    request.setAttribute("success", false);
-                    request.setAttribute("errorMsg","密码不能为空");
-                    break;
-                }
-                String name = request.getParameter("name");
-                if (name==null){
-                    request.setAttribute("success", false);
-                    request.setAttribute("errorMsg","用户名不能为空");
-                    break;
-                }
-                String email = request.getParameter("email");
-                if (email==null){
-                    request.setAttribute("success", false);
-                    request.setAttribute("errorMsg","邮箱不能为空");
-                }
+        boolean success = false;
+        do {
+            String pass = request.getParameter("pass");
+            if (pass==null){
+                request.setAttribute("errorMsg","密码不能为空");
+                break;
+            }
+            String name = request.getParameter("name");
+            if (name==null){
+                request.setAttribute("errorMsg","用户名不能为空");
+                break;
+            }
+            String email = request.getParameter("email");
+            if (email==null){
+                request.setAttribute("errorMsg","邮箱不能为空");
+            }
 
-                pass = PasswordTool.translatePassword(pass);
+            pass = PasswordTool.translatePassword(pass);
 
+            Session session = DbConnection.getSession();
+
+            try {
                 Transaction transaction = session.beginTransaction();
 
                 UsersEntity entity = new UsersEntity();
@@ -57,14 +59,18 @@ public class AddUser extends Function{
 
                 transaction.commit();
 
-                request.setAttribute("success", true);
-            }while (false);
-        }catch (Exception e){
-            e.printStackTrace();
-            request.setAttribute("success", false);
-        }
+                success = true;
+            }catch (Exception e){
+                e.printStackTrace();
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.CAN_NOT_WRITE_TO_DB);
+            }
 
-        session.close();
+            session.close();
+        }while (false);
+
+        if (success){
+            RedirectTool.redirectTo(request,response,"/u/ap");
+        }
 
         RenderTool.setRenderPage(request,"user/AddUser");
     }

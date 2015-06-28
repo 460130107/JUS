@@ -3,7 +3,11 @@ package com.plter.jus.auth;
 import com.plter.jus.Constants;
 import com.plter.jus.auth.annotation.RequireLogin;
 import com.plter.jus.auth.annotation.RequireSuperAdmin;
+import com.plter.jus.auth.funcs.fun.ShowFunctionList;
+import com.plter.jus.auth.funcs.group.AddGroup;
+import com.plter.jus.auth.funcs.group.EditPermissions;
 import com.plter.jus.auth.funcs.group.ShowGroupAdminPage;
+import com.plter.jus.auth.funcs.group.UpdatePermissions;
 import com.plter.jus.auth.funcs.main.ShowMainPage;
 import com.plter.jus.auth.funcs.user.AddUser;
 import com.plter.jus.auth.funcs.user.Login;
@@ -93,6 +97,10 @@ public class Functions {
 
     private static final Map<String,Function> AllFunctions = new HashMap<>();
 
+    public static Map<String, Function> getFunctions() {
+        return AllFunctions;
+    }
+
     static public void addFunc(Function func){
         AllFunctions.put(func.getClass().getName(),func);
     }
@@ -104,5 +112,9 @@ public class Functions {
         addFunc(new ShowAdminPage());
         addFunc(new Reg());
         addFunc(new ShowGroupAdminPage());
+        addFunc(new AddGroup());
+        addFunc(new ShowFunctionList());
+        addFunc(new EditPermissions());
+        addFunc(new UpdatePermissions());
     }
 }
