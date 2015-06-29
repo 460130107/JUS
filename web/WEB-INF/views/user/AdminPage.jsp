@@ -18,9 +18,9 @@
             <a href="#" class="button" id="btn-add-user">添加用户</a>
         </div>
         <table border="1" width="100%">
-            <tr><th>ID</th><th>用户名</th><th>邮箱</th></tr>
+            <tr><th>ID</th><th>用户名</th><th>邮箱</th><th width="120">操作</th></tr>
             <c:forEach items="${userList}" var="user">
-                <tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td></tr>
+                <tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td><td style="text-align: center;"><a href="#" class="button">编辑属性</a></td></tr>
             </c:forEach>
         </table>
 
