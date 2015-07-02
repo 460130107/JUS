@@ -9,10 +9,7 @@ import com.plter.jus.auth.funcs.group.EditPermissions;
 import com.plter.jus.auth.funcs.group.ShowGroupAdminPage;
 import com.plter.jus.auth.funcs.group.UpdatePermissions;
 import com.plter.jus.auth.funcs.main.ShowMainPage;
-import com.plter.jus.auth.funcs.user.AddUser;
-import com.plter.jus.auth.funcs.user.Login;
-import com.plter.jus.auth.funcs.user.Reg;
-import com.plter.jus.auth.funcs.user.ShowAdminPage;
+import com.plter.jus.auth.funcs.user.*;
 import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.FuncshipEntity;
@@ -24,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +87,13 @@ public class Functions {
 
     static private void showLoginPage(HttpServletRequest request,HttpServletResponse response){
         try {
-            response.sendRedirect(String.format("%s/u/lp?redirect=%s", request.getContextPath(), request.getRequestURI()));
+            StringBuffer callback = request.getRequestURL();
+            String params = request.getQueryString();
+            if (params!=null){
+                callback.append("?").append(params);
+            }
+
+            response.sendRedirect(String.format("%s/u/lp?redirect=%s", request.getContextPath(), URLEncoder.encode(callback.toString(),"UTF-8")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,5 +121,7 @@ public class Functions {
         addFunc(new ShowFunctionList());
         addFunc(new EditPermissions());
         addFunc(new UpdatePermissions());
+        addFunc(new ShowEditUserPage());
+        addFunc(new UpdateUserInfo());
     }
 }

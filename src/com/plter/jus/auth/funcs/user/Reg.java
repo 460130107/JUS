@@ -4,7 +4,7 @@ import com.plter.jus.auth.Function;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.msg.ErrorMessages;
+import com.plter.jus.errors.ErrorMessages;
 import com.plter.jus.Constants;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,6 +12,9 @@ import org.hibernate.Transaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by plter on 6/25/15.
@@ -43,6 +46,7 @@ public class Reg extends Function {
                 entity.setName(name);
                 entity.setEmail(email);
                 entity.setPass(PasswordTool.translatePassword(pass));
+                entity.setRegtime(Timestamp.valueOf(LocalDateTime.now()));
                 session.save(entity);
                 transaction.commit();
             }catch (Exception e){

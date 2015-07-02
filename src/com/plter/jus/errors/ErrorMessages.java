@@ -1,4 +1,4 @@
-package com.plter.jus.msg;
+package com.plter.jus.errors;
 
 /**
  * Created by plter on 6/25/15.

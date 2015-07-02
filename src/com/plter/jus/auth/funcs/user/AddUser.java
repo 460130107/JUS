@@ -2,20 +2,20 @@ package com.plter.jus.auth.funcs.user;
 
 import com.plter.jus.Constants;
 import com.plter.jus.auth.Function;
-import com.plter.jus.auth.annotation.RequireSuperAdmin;
 import com.plter.jus.auth.annotation.RequireLogin;
-import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.auth.tools.RedirectTool;
 import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.msg.ErrorMessages;
+import com.plter.jus.errors.ErrorMessages;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * Created by plter on 6/23/15.
@@ -55,6 +55,7 @@ public class AddUser extends Function{
                 entity.setName(name);
                 entity.setEmail(email);
                 entity.setPass(pass);
+                entity.setRegtime(Timestamp.valueOf(LocalDateTime.now()));
                 session.save(entity);
 
                 transaction.commit();

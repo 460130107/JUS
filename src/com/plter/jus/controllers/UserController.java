@@ -2,10 +2,7 @@ package com.plter.jus.controllers;
 
 import com.plter.jus.Constants;
 import com.plter.jus.auth.Functions;
-import com.plter.jus.auth.funcs.user.AddUser;
-import com.plter.jus.auth.funcs.user.Login;
-import com.plter.jus.auth.funcs.user.Reg;
-import com.plter.jus.auth.funcs.user.ShowAdminPage;
+import com.plter.jus.auth.funcs.user.*;
 import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.RenderTool;
 import org.springframework.stereotype.Controller;
@@ -51,5 +48,17 @@ public class UserController {
     public @ResponseBody String reg(HttpServletRequest request,HttpServletResponse response){
         Functions.call(Reg.class,request,response);
         return AttrTool.getRequestAttr(request, Constants.KEY_ERROR_MSG,"Nothing");
+    }
+
+    @RequestMapping(value = "/u/ep"/*Edit user page*/,method = RequestMethod.GET)
+    public String editUser(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(ShowEditUserPage.class,request,response);
+        return RenderTool.getRenderPage(request);
+    }
+
+    @RequestMapping(value = "/u/ep"/*Edit user page*/,method = RequestMethod.POST)
+    public String editUserHandler(HttpServletRequest request,HttpServletResponse response){
+        Functions.call(UpdateUserInfo.class,request,response);
+        return RenderTool.getRenderPage(request);
     }
 }

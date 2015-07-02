@@ -9,7 +9,7 @@ import com.plter.jus.auth.tools.RedirectTool;
 import com.plter.jus.auth.tools.RenderTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.FuncshipEntity;
-import com.plter.jus.msg.ErrorMessages;
+import com.plter.jus.errors.ErrorMessages;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 

@@ -5,13 +5,18 @@ import com.plter.jus.auth.tools.AttrTool;
 import com.plter.jus.auth.tools.PasswordTool;
 import com.plter.jus.db.DbConnection;
 import com.plter.jus.db.entities.UsersEntity;
-import com.plter.jus.msg.ErrorMessages;
+import com.plter.jus.errors.ErrorMessages;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,17 +43,37 @@ public class Login extends Function {
 
             pass = PasswordTool.translatePassword(pass);
 
+            UsersEntity user = null;
+
             Session session = DbConnection.getSession();
             List<UsersEntity> list = session.createCriteria(UsersEntity.class).add(Restrictions.eq("name", name)).add(Restrictions.eq("pass", pass)).list();
+            if (list.size()>0){
+                user = list.get(0);
+            }
+            if (user!=null){
+                try {
+                    Transaction transaction = session.beginTransaction();
+                    user.setLastlogtime(Timestamp.valueOf(LocalDateTime.now()));
+                    transaction.commit();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             session.close();
 
-            if (list.size()>0){
+            if (user!=null){
                 CurrentUser.setLogged(request, true);
                 CurrentUser.setLoggedName(request, name);
                 CurrentUser.setLoggedId(request, list.get(0).getId());
 
                 String redirect = request.getParameter("redirect");
-                if (redirect==null){
+                if (redirect!=null){
+                    try {
+                        redirect = URLDecoder.decode(redirect,"UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }else {
                     redirect = request.getContextPath();
                 }
 
@@ -58,7 +83,7 @@ public class Login extends Function {
                     e.printStackTrace();
                 }
             }else {
-                request.setAttribute("errorMsg","登陆失败");
+                request.setAttribute("errorMsg", "登陆失败");
             }
         }while (false);
 
