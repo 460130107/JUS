@@ -35,14 +35,14 @@ public class EditPermissions extends Function {
         do {
             String groupId = request.getParameter("gid");
             if (groupId==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID);
                 break;
             }
 
             long gid = 0;
             try {gid = Long.parseLong(groupId);}catch (NumberFormatException e){}
             if (gid>0){
-                Session session = DbConnection.getSession();
+                Session session = DbConnection.openSession();
 
                 List<FuncshipEntity> list = session.createCriteria(FuncshipEntity.class).add(Restrictions.eq("groupid", gid)).list();
                 session.close();
@@ -52,7 +52,7 @@ public class EditPermissions extends Function {
 
                 success = true;
             }else {
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID);
                 break;
             }
 

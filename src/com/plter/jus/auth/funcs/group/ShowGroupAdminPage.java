@@ -21,7 +21,7 @@ public class ShowGroupAdminPage extends Function {
     @Override
     @RequireLogin
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Session session = DbConnection.getSession();
+        Session session = DbConnection.openSession();
         List<GroupsEntity> list = session.createCriteria(GroupsEntity.class).list();
         request.setAttribute(KEY_GROUPS,list);
         session.close();

@@ -32,12 +32,12 @@ public class Login extends Function {
 
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute("errorMsg", ErrorMessages.NO_NAME_FOUND);
+                request.setAttribute("errorMsg", ErrorMessages.NO_NAME);
                 break;
             }
             String pass = request.getParameter("pass");
             if (pass==null){
-                request.setAttribute("errorMsg", ErrorMessages.NO_PASS_FOUND);
+                request.setAttribute("errorMsg", ErrorMessages.NO_PASS);
                 break;
             }
 
@@ -45,7 +45,7 @@ public class Login extends Function {
 
             UsersEntity user = null;
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
             List<UsersEntity> list = session.createCriteria(UsersEntity.class).add(Restrictions.eq("name", name)).add(Restrictions.eq("pass", pass)).list();
             if (list.size()>0){
                 user = list.get(0);

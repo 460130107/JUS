@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by plter on 6/25/15.
@@ -25,21 +24,21 @@ public class Reg extends Function {
         do {
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_NAME_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_NAME);
                 break;
             }
             String pass = request.getParameter("pass");
             if (pass==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_PASS_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_PASS);
                 break;
             }
             String email = request.getParameter("email");
             if (email==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_EMAIL_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_EMAIL);
                 break;
             }
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
             try {
                 Transaction transaction = session.beginTransaction();
                 UsersEntity entity = new UsersEntity();

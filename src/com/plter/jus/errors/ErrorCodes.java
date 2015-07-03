@@ -21,5 +21,10 @@ public class ErrorCodes {
 
     //数据库相关2开头>>>>>>>>>>>>>>>>>>>>>>>>>
     public static final int CAN_NOT_WRITE_TO_DB = 200000;
+    public static final int NO_SUCH_GROUP_IN_DB = 200001;
+    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    //用户组相关>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    public static final int NO_GROUP_NAME = 300000;
     //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }

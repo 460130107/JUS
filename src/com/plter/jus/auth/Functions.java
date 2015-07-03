@@ -4,10 +4,7 @@ import com.plter.jus.Constants;
 import com.plter.jus.auth.annotation.RequireLogin;
 import com.plter.jus.auth.annotation.RequireSuperAdmin;
 import com.plter.jus.auth.funcs.fun.ShowFunctionList;
-import com.plter.jus.auth.funcs.group.AddGroup;
-import com.plter.jus.auth.funcs.group.EditPermissions;
-import com.plter.jus.auth.funcs.group.ShowGroupAdminPage;
-import com.plter.jus.auth.funcs.group.UpdatePermissions;
+import com.plter.jus.auth.funcs.group.*;
 import com.plter.jus.auth.funcs.main.ShowMainPage;
 import com.plter.jus.auth.funcs.user.*;
 import com.plter.jus.auth.tools.RenderTool;
@@ -21,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -45,20 +41,22 @@ public class Functions {
                             long uid = Login.CurrentUser.getLoggedId(request);
 
                             if (uid!= Constants.SUPER_ADMIN_ID){
-                                Session session = DbConnection.getSession();
+                                Session session = DbConnection.openSession();
                                 boolean pass = false;//是否成功通过权限验证
 
                                 List<GroupshipEntity> list = session.createCriteria(GroupshipEntity.class).add(Restrictions.eq("userid", uid)).list();
                                 if (list.size()>0) {
                                     List<Long> groupIds = list.stream().map(GroupshipEntity::getGroupid).collect(Collectors.toList());
                                     List<FuncshipEntity> funcships = session.createCriteria(FuncshipEntity.class).add(Restrictions.in("groupid",groupIds)).list();
+                                    session.close();
 
                                     if (funcships.stream().map(FuncshipEntity::getFuncname).collect(Collectors.toList()).contains(funcName)){
                                         f.execute(request,response);
                                         pass = true;
                                     }
+                                }else {
+                                    session.close();
                                 }
-                                session.close();
 
                                 if (!pass){
                                     RenderTool.setRenderPage(request, "errors/AccessDenied");
@@ -123,5 +121,7 @@ public class Functions {
         addFunc(new UpdatePermissions());
         addFunc(new ShowEditUserPage());
         addFunc(new UpdateUserInfo());
+        addFunc(new AddGroupship());
+        addFunc(new RemoveGroupship());
     }
 }

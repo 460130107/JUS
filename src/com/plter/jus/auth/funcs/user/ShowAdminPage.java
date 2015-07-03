@@ -29,7 +29,7 @@ public class ShowAdminPage extends Function{
     @Override
     @RequireLogin
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Session session = DbConnection.getSession();
+        Session session = DbConnection.openSession();
 
         int pageIndex = AttrTool.getRequestParam(request,"pi"/*Page Index*/,0);
 

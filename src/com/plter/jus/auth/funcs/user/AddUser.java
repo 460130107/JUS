@@ -46,7 +46,7 @@ public class AddUser extends Function{
 
             pass = PasswordTool.translatePassword(pass);
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
 
             try {
                 Transaction transaction = session.beginTransaction();

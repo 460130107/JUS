@@ -78,7 +78,7 @@ public class UpdateUserInfo extends Function {
 
             UsersEntity user = null;
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
             try {
                 Transaction transaction = session.beginTransaction();
                 user = (UsersEntity) session.load(UsersEntity.class,uid);
@@ -93,6 +93,8 @@ public class UpdateUserInfo extends Function {
                 StatusTool.setErrorCode(request,ErrorCodes.CAN_NOT_WRITE_TO_DB);
                 break;
             }
+
+            ShowEditUserPage.retrieveUserGroups(session,request,uid);
 
             session.close();
 

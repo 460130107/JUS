@@ -29,23 +29,23 @@ public class UpdatePermissions extends Function {
             String[] names = request.getParameterValues("funcs");
 
             if (names==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_FUNCS_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG, ErrorMessages.NO_FUNCS);
                 break;
             }
 
             String groupId = request.getParameter("gid");
             if (groupId==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID);
                 break;
             }
 
             try{gid=Long.parseLong(groupId);}catch (NumberFormatException e){}
             if (gid<=0){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_GROUP_ID);
                 break;
             }
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
 
             try {
                 Transaction transaction = session.beginTransaction();

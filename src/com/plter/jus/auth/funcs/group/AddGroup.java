@@ -27,12 +27,12 @@ public class AddGroup extends Function {
         do {
             String name = request.getParameter("name");
             if (name==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_NAME_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_NAME);
                 break;
             }
             String desc = request.getParameter("desc");
             if (desc==null){
-                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_DESC_FOUND);
+                request.setAttribute(Constants.KEY_ERROR_MSG,ErrorMessages.NO_DESC);
                 break;
             }
 
@@ -40,7 +40,7 @@ public class AddGroup extends Function {
             e.setName(name);
             e.setDescription(desc);
 
-            Session session = DbConnection.getSession();
+            Session session = DbConnection.openSession();
             try {
                 Transaction transaction = session.beginTransaction();
 

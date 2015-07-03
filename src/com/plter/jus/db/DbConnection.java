@@ -30,12 +30,12 @@ public class DbConnection {
         }
     }
 
-    public static Session getSession() throws HibernateException {
+    public static Session openSession() throws HibernateException {
         return ourSessionFactory.openSession();
     }
 
 //    public static void main(final String[] args) throws Exception {
-//        final Session session = getSession();
+//        final Session session = openSession();
 //        try {
 //            System.out.println("querying all the managed entities...");
 //            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();

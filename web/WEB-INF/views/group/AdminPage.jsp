@@ -30,7 +30,7 @@
     <form action="${pageContext.request.contextPath}/g/add" method="post">
         <p>组名：<input name="name" type="text" required="required"></p>
         <p>描述：<textarea name="desc" rows="5"></textarea></p>
-        <input type="submit" class="button">
+        <input type="submit" class="button" value="添加">
     </form>
 </div>
 
