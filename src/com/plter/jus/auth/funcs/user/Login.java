@@ -83,7 +83,7 @@ public class Login extends Function {
                     e.printStackTrace();
                 }
             }else {
-                request.setAttribute("errorMsg", "登陆失败");
+                request.setAttribute("errorMsg", "Fail to login");
             }
         }while (false);
 

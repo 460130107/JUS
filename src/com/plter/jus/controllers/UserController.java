@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping(value = "/u/ap"/*Admin Page*/,method = RequestMethod.GET)
     public String userAdmin(HttpServletRequest request, HttpServletResponse response){
-        Functions.call(ShowAdminPage.class,request,response);
+        Functions.call(ShowUserAdminPage.class,request,response);
         return RenderTool.getRenderPage(request);
     }
 

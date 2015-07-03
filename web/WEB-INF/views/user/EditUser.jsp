@@ -10,7 +10,7 @@
     <%@include file="../tpls/MainStyle.jsp"%>
 </head>
 <body>
-<h1>功能列表</h1>
+<h1>编辑用户信息</h1>
 <%@include file="../tpls/NavMenu.jsp"%>
 
 <div class="ui-widget main-content">

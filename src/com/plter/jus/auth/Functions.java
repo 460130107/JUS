@@ -112,7 +112,7 @@ public class Functions {
         addFunc(new AddUser());
         addFunc(new Login());
         addFunc(new ShowMainPage());
-        addFunc(new ShowAdminPage());
+        addFunc(new ShowUserAdminPage());
         addFunc(new Reg());
         addFunc(new ShowGroupAdminPage());
         addFunc(new AddGroup());

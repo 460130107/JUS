@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by plter on 6/25/15.
  */
-public class ShowAdminPage extends Function{
+public class ShowUserAdminPage extends Function{
 
     public static final String KEY_CURRENT_PAGE_INDEX = "currentPageIndex";
     public static final String KEY_MAX_PAGE_COUNT = "maxPageCount";
